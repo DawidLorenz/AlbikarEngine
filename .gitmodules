@@ -1,0 +1,13 @@
+[submodule "AlbikarEditor/thirtParts/imgui"]
+	path = AlbikarEditor/thirtParts/imgui
+	url = https://github.com/ocornut/imgui.git
+	branch = docking
+[submodule "ThirtParts/glfw"]
+	path = ThirtParts/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "AlbikarEngine/thirtParts/glm"]
+	path = AlbikarEngine/thirtParts/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "ThirtParts/googletest"]
+	path = ThirtParts/googletest
+	url = https://github.com/google/googletest/

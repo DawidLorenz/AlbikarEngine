@@ -1,0 +1,37 @@
+message("-- SetUp ImGui CMake")
+set(IMGUI_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/AlbikarEditor/thirtParts/imgui)
+set(ALBIKAR_IMGUI_DEFINES IMGUI_DEFINE_MATH_OPERATORS)
+file(GLOB IMGUI_SOURCES ${IMGUI_INCLUDE_DIR}/*.cpp)
+file(GLOB IMGUI_HEADERS ${IMGUI_INCLUDE_DIR}/*.h)
+
+set(IMGUI_BACKENDS_DIR ${IMGUI_INCLUDE_DIR}/backends)
+set(IMGUI_BACKEND_SOURCES
+    ${IMGUI_BACKENDS_DIR}/imgui_impl_glfw.cpp
+    ${IMGUI_BACKENDS_DIR}/imgui_impl_vulkan.cpp)
+set(IMGUI_BACKEND_HEADERS
+    ${IMGUI_BACKENDS_DIR}/imgui_impl_glfw.h
+    ${IMGUI_BACKENDS_DIR}/imgui_impl_vulkan.h)
+
+add_library(imgui STATIC
+    ${IMGUI_SOURCES} ${IMGUI_SOURCES}
+    ${IMGUI_BACKEND_HEADERS} ${IMGUI_BACKEND_SOURCES})
+
+target_include_directories(imgui PUBLIC
+    ${ALBIKAR_IMGUI_DEFINES}
+    ${IMGUI_INCLUDE_DIR}
+    ${IMGUI_BACKENDS_DIR}
+    ${ALBIKAR_VULKAN_INCLUDES}
+    ${ALBIKAR_GLFW_INCLUDES}
+)
+
+set_target_properties(imgui PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(imgui PROPERTIES FOLDER 3rdparty)
+
+set(IMGUI_LIBRARIES imgui)
+
+set(ALBIKAR_IMGUI_INCLUDES ${IMGUI_INCLUDE_DIR})
+set(ALBIKAR_IMGUI_LIBRARIES ${IMGUI_LIBRARIES})
+
+message("---- ImGui Lib: " ${ALBIKAR_IMGUI_LIBRARIES})
+message("---- ImGui Defines: " ${ALBIKAR_IMGUI_DEFINES})
+message("---- ImGui Includes: " ${ALBIKAR_IMGUI_INCLUDES})
