@@ -77,7 +77,8 @@
         "xlocbuf": "cpp",
         "xlocmes": "cpp",
         "xlocmon": "cpp",
-        "xloctime": "cpp"
+        "xloctime": "cpp",
+        "xhash": "cpp"
     },
     "C_Cpp.clang_format_fallbackStyle": "WebKit",
     "editor.formatOnSave": true,

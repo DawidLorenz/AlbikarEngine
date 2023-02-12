@@ -1,14 +1,28 @@
+#define GLFW_INCLUDE_NONE
+#define GLFW_INCLUDE_VULKAN
 #include "AlbikarEngine.hpp"
+#include "Logger.hpp"
+#include <GLFW/glfw3.h>
 
-namespace engine {
+namespace Albikar::engine {
 auto AlbikarEngine::InitEngine(const uint16_t resolutionWidth, const uint16_t resolutionHeight, const char* gameName, const bool fixedResolution) -> ALBIKAR_RETURN
 {
+    LOG_INFO("Init Engine res(", resolutionWidth, "/", resolutionHeight, ") GameName: ", gameName, " FixedRes: ", fixedResolution);
+    GLFWwindow* window = m_Window->CreateWindow(resolutionWidth, resolutionHeight, gameName, fixedResolution);
+    if (window == nullptr) {
+        throw std::runtime_error("Failed to create Window");
+    }
+
+    if (m_Render->Init(window, resolutionWidth, resolutionHeight, gameName, m_Debug->EngineProperties()) != ALBIKAR_SUCCESS) {
+        throw std::runtime_error("Failed to create Render Engine");
+    }
 
     return ALBIKAR_SUCCESS;
 }
 
 auto AlbikarEngine::Start() -> ALBIKAR_RETURN
 {
+    // TODO(dlorenz) Render Loop
     return ALBIKAR_SUCCESS;
 }
 
@@ -16,6 +30,16 @@ auto AlbikarEngine::Terminate() -> ALBIKAR_RETURN
 {
     StopEngine();
     return ALBIKAR_SUCCESS;
+}
+
+auto AlbikarEngine::AlbikarWindow() -> std::shared_ptr<AlbikarAPI::IAlbikarWindow>
+{
+    return m_Window;
+}
+
+auto AlbikarEngine::AlbikarDebug() -> std::shared_ptr<AlbikarAPI::IAlbikarDebug>
+{
+    return m_Debug;
 }
 
 AlbikarEngine::~AlbikarEngine()
@@ -43,4 +67,4 @@ auto AlbikarEngine::StopEngine() -> bool
     return true;
 }
 
-} // namespace engine
+} // namespace Albikar::engine

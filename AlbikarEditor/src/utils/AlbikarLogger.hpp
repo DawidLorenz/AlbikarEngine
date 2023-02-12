@@ -1,5 +1,5 @@
 #pragma once
-
+#include "IAlbikarDebug.hpp"
 #include "LogInfo.hpp"
 #include <atomic>
 #include <iostream>
@@ -14,6 +14,37 @@ public:
         GUI_APP,
         FILE
     };
+
+    static auto logCallBack(const char* fileName, const char* functionName, const uint64_t line, const Albikar::AlbikarAPI::IAlbikarDebug::LOG_MODE mode, const char* logOutput) -> void
+    {
+        CLogInfo logInfo;
+
+        CLogInfo::LOG_MODE mapMode = CLogInfo::LOG_MODE::CRITICAL;
+        switch (mode) {
+        case Albikar::AlbikarAPI::IAlbikarDebug::LOG_MODE::WARN:
+            mapMode = CLogInfo::LOG_MODE::WARN;
+            break;
+        case Albikar::AlbikarAPI::IAlbikarDebug::LOG_MODE::CRITICAL:
+            mapMode = CLogInfo::LOG_MODE::CRITICAL;
+            break;
+        case Albikar::AlbikarAPI::IAlbikarDebug::LOG_MODE::INFO:
+            mapMode = CLogInfo::LOG_MODE::INFO;
+            break;
+        case Albikar::AlbikarAPI::IAlbikarDebug::LOG_MODE::ERROR:
+            mapMode = CLogInfo::LOG_MODE::ERROR;
+            break;
+        case Albikar::AlbikarAPI::IAlbikarDebug::LOG_MODE::LINE:
+            mapMode = CLogInfo::LOG_MODE::LINE;
+            break;
+        default:
+            break;
+        }
+
+        log_info(logInfo, mapMode, line, fileName, functionName);
+        log_args(logInfo, logOutput);
+        logInfo.m_bLogFromAlbikar = false;
+        handle_output(logInfo);
+    }
 
     template <typename... Args>
     static auto log(const CLogInfo::LOG_MODE& mode,

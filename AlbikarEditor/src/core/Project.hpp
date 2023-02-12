@@ -24,5 +24,5 @@ private:
     std::string m_ProjectDescription;
 
 private:
-    std::shared_ptr<AlbikarAPI::IAlbikarEngine> m_engineProxy;
+    std::shared_ptr<Albikar::AlbikarAPI::IAlbikarEngine> m_engineProxy;
 };

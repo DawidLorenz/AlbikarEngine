@@ -57,6 +57,9 @@
 #endif
 
 #include <cstdint>
+#include <functional>
+#include <memory>
+
 #define ALBIKAR_INTERFACE(...)                                  \
     __VA_ARGS__() = default;                                    \
     virtual ~__VA_ARGS__() = default;                           \
@@ -69,4 +72,4 @@ using ALBIKAR_RETURN = uint16_t;
 constexpr ALBIKAR_RETURN ALBIKAR_SUCCESS = 0;
 constexpr ALBIKAR_RETURN ALBIKAR_FAILURE = 1;
 
-#include <memory>
+using NotifyOnChange = std::function<void()>;

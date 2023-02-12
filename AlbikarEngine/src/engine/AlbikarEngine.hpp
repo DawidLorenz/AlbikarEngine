@@ -4,14 +4,17 @@
 #include "AlbikarWindow.hpp"
 #include "IAlbikarEngine.hpp"
 #include <glm/glm.hpp>
+#pragma warning(disable : 4273)
 
-namespace engine {
+namespace Albikar::engine {
 class AlbikarEngine final : public AlbikarAPI::IAlbikarEngine {
 public:
     // INTERFACE
-    [[nodiscard]] auto InitEngine(const uint16_t resolutionWidth, const uint16_t resolutionHeight, const char* gameName, const bool fixedResolution) -> ALBIKAR_RETURN final;
-    [[nodiscard]] auto Start() -> ALBIKAR_RETURN final;
-    [[nodiscard]] auto Terminate() -> ALBIKAR_RETURN final;
+    auto InitEngine(const uint16_t resolutionWidth, const uint16_t resolutionHeight, const char* gameName, const bool fixedResolution) -> ALBIKAR_RETURN final;
+    auto Start() -> ALBIKAR_RETURN final;
+    auto Terminate() -> ALBIKAR_RETURN final;
+    auto AlbikarWindow() -> std::shared_ptr<AlbikarAPI::IAlbikarWindow> final;
+    auto AlbikarDebug() -> std::shared_ptr<AlbikarAPI::IAlbikarDebug> final;
 
 public:
     ~AlbikarEngine() final;
@@ -29,14 +32,14 @@ private:
 
 std::shared_ptr<AlbikarEngine> coreEngine = nullptr;
 
-} // namespace engine
+} // namespace Albikar::engine
 
-auto AlbikarAPI::CreateEngine() -> std::shared_ptr<AlbikarAPI::IAlbikarEngine>
+auto Albikar::AlbikarAPI::CreateEngine() -> std::shared_ptr<Albikar::AlbikarAPI::IAlbikarEngine>
 {
-    if (engine::coreEngine != nullptr) {
-        engine::coreEngine.reset();
-        engine::coreEngine = nullptr;
+    if (Albikar::engine::coreEngine != nullptr) {
+        Albikar::engine::coreEngine.reset();
+        Albikar::engine::coreEngine = nullptr;
     }
-    engine::coreEngine = std::make_shared<engine::AlbikarEngine>();
-    return engine::coreEngine;
+    Albikar::engine::coreEngine = std::make_shared<Albikar::engine::AlbikarEngine>();
+    return Albikar::engine::coreEngine;
 }

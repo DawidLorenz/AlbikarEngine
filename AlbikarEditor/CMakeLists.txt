@@ -51,7 +51,7 @@ set(AlbikarDirectory
     thirtParts/AlbikarEngine/include/) # AlbikarEngine
 
 add_executable(AlbikarEditor ${AlbikarGameEditor_SRC})
-target_compile_features(AlbikarEditor PRIVATE cxx_std_20)
+target_compile_features(AlbikarEditor PRIVATE ${ALBIKAR_CPP_STANDARD})
 
 # ###########################################################
 # ###################  FINAL SETUP  #########################

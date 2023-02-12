@@ -1,10 +1,9 @@
 #include "Project.hpp"
+#include "AlbikarLogger.hpp"
 
 CProject::~CProject()
 {
-    if (m_engineProxy) {
-        m_engineProxy->Terminate();
-    }
+    CloseProject();
 }
 
 CProject::CProject(const std::string projectPath, const std::string projectName, const std::string projectDescription)
@@ -16,12 +15,17 @@ CProject::CProject(const std::string projectPath, const std::string projectName,
 
 auto CProject::StartProject() -> void
 {
-    m_engineProxy = AlbikarAPI::CreateEngine();
+    m_engineProxy = Albikar::AlbikarAPI::CreateEngine();
+    m_engineProxy->AlbikarDebug()->ConnectLogger(std::bind(&CAlbikarLogger::logCallBack, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
+    m_engineProxy->InitEngine(1280, 720, "Example Game", false);
 }
 
 auto CProject::CloseProject() -> void
 {
-    m_engineProxy->Terminate();
+    if (m_engineProxy != nullptr) {
+        m_engineProxy->AlbikarDebug()->DisconnectLogger();
+        m_engineProxy->Terminate();
+    }
 }
 
 auto CProject::SaveProject() -> void

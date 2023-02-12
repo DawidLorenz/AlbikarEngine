@@ -5,4 +5,5 @@ message("####################### Create Thirt Parts ######################")
 
 include(cmake/glfw.cmake) # GLFW Package
 include(cmake/vulkan.cmake) # Vulkan Package
-include(cmake/gtest.cmake) # GTest
+include(cmake/gtest.cmake) # GTest Package
+include(cmake/pugixml.cmake) # PugiXML Package

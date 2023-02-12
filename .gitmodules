@@ -11,3 +11,6 @@
 [submodule "ThirtParts/googletest"]
 	path = ThirtParts/googletest
 	url = https://github.com/google/googletest/
+[submodule "ThirtParts/pugixml"]
+	path = ThirtParts/pugixml
+	url = https://github.com/zeux/pugixml.git

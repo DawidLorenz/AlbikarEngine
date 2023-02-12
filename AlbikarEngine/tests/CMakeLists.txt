@@ -1,7 +1,7 @@
 # ###########################################################
 # Create Albikar Engine Tests
 cmake_minimum_required(VERSION 3.20)
-message("############### Create Albikar Engine Tests ################")
+message("################### Create Albikar Engine Tests #################")
 
 add_executable(AlbikarEngineTest
     main.cpp

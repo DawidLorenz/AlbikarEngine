@@ -1,7 +1,9 @@
 #pragma once
 #include "AlbikarDefines.hpp"
+#include "IAlbikarDebug.hpp"
+#include "IAlbikarWindow.hpp"
 
-namespace AlbikarAPI {
+namespace Albikar::AlbikarAPI {
 class IAlbikarEngine {
 public:
     ALBIKAR_INTERFACE(IAlbikarEngine)
@@ -21,7 +23,15 @@ public:
     /// @brief Close Engine
     /// @return ALBIKAR_SUCCESS if success
     virtual auto Terminate() -> ALBIKAR_RETURN = 0;
+
+    /// @brief
+    /// @return
+    virtual auto AlbikarWindow() -> std::shared_ptr<IAlbikarWindow> = 0;
+
+    /// @brief
+    /// @return
+    virtual auto AlbikarDebug() -> std::shared_ptr<IAlbikarDebug> = 0;
 };
 
-auto ALBIKAR_API CreateEngine() -> std::shared_ptr<IAlbikarEngine>;
-} // namespace AlbikarAPI
+ALBIKAR_API auto CreateEngine() -> std::shared_ptr<IAlbikarEngine>;
+} // namespace Albikar::AlbikarAPI

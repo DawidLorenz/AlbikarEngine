@@ -1,7 +1,7 @@
 # ###########################################################
 # Create Albikar Engine
 cmake_minimum_required(VERSION 3.20)
-message("##################### Create Albikar Engine ####################")
+message("##################### Create Albikar Engine #####################")
 
 # ###########################################################
 # ###########################################################
@@ -22,16 +22,16 @@ include(cmake/glm.cmake) # GLM Package
 # endif()
 file(GLOB MODULE_FILES
     include/*.hpp
+    src/utils/*.cpp
+    src/utils/*.hpp
     src/ai/*.cpp
     src/ai/*.hpp
     src/audio/*.cpp
     src/audio/*.hpp
     src/core/*.cpp
     src/core/*.hpp
-    src/debugDraw/*.cpp
-    src/debugDraw/*.hpp
-    src/debugLog/*.cpp
-    src/debugLog/*.hpp
+    src/debug/*.cpp
+    src/debug/*.hpp
     src/engine/*.cpp
     src/engine/*.hpp
     src/global/*.cpp
@@ -46,6 +46,8 @@ file(GLOB MODULE_FILES
     src/platform/*.hpp
     src/render/*.cpp
     src/render/*.hpp
+    src/render/vulkan/*.cpp
+    src/render/vulkan/*.hpp
     src/screen/*.cpp
     src/screen/*.hpp
     src/scripting/*.cpp
@@ -58,6 +60,7 @@ file(GLOB MODULE_FILES
 set(AlbikarEngineDirectory
     include/
     src/
+    src/utils/
     src/ai/
     src/audio/
     src/core/
@@ -76,22 +79,31 @@ set(AlbikarEngineDirectory
 # TODO(dlorenz) make in SHARED AND STATIC
 add_library(AlbikarEngine SHARED ${MODULE_FILES})
 
+target_compile_features(AlbikarEngine PRIVATE ${ALBIKAR_CPP_STANDARD})
+
 # TODO(dlorenz) remove for STATIC Lib
 target_compile_definitions(AlbikarEngine PRIVATE DLIB_EXPORTS=1)
 
 # Include Directory
 target_include_directories(AlbikarEngine
     PRIVATE
+    ${ALBIKAR_PUGIXML_INCLUDES}
     ${AlbikarEngineDirectory}
     ${ALBIKAR_VULKAN_INCLUDES}
     ${ALBIKAR_GLFW_INCLUDES})
 
-target_link_libraries(AlbikarEngine PRIVATE glm)
+target_link_libraries(AlbikarEngine
+    glm
+    ${ALBIKAR_PUGIXML_LIBRARIES}
+    ${ALBIKAR_VULKAN_LIBRARIES}
+    ${ALBIKAR_GLFW_LIBRARIES})
 
 install(TARGETS AlbikarEngine DESTINATION AlbikarEngine-bin)
 install(FILES
-    include/AlbikarCore.hpp
-    include/AlbikarEngine.hpp
+    include/AlbikarDefines.hpp
+    include/IAlbikarEngine.hpp
+    include/IAlbikarDebug.hpp
+    include/IAlbikarWindow.hpp
     DESTINATION AlbikarEngine-include)
 
 add_custom_command(TARGET AlbikarEngine PRE_BUILD
