@@ -2,11 +2,11 @@
 namespace Albikar::utils {
 
 CLogInfo::CLogInfo()
-    : m_sFileName("")
-    , m_sFunctionName("")
-    , m_uiFileLine(false)
+    : m_sFileName()
+    , m_sFunctionName()
+    , m_uiFileLine(0)
     , m_eMode(LOG_MODE::CRITICAL)
-    , m_sLogOutput("")
+    , m_sLogOutput()
 {
 }
 

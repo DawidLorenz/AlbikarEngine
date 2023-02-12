@@ -3,7 +3,6 @@
 #include "AlbikarRenderer.hpp"
 #include "AlbikarWindow.hpp"
 #include "IAlbikarEngine.hpp"
-#include <glm/glm.hpp>
 #pragma warning(disable : 4273)
 
 namespace Albikar::engine {
@@ -19,6 +18,10 @@ public:
 public:
     ~AlbikarEngine() final;
     AlbikarEngine();
+    AlbikarEngine(const AlbikarEngine&) = delete;
+    AlbikarEngine(AlbikarEngine&&) = delete;
+    auto operator=(const AlbikarEngine&) -> AlbikarEngine& = delete;
+    auto operator=(AlbikarEngine&&) -> AlbikarEngine& = delete;
 
 private:
     auto StartEngine() -> bool;

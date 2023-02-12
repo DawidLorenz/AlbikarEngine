@@ -107,7 +107,11 @@
         "readability-redundant-access-specifiers",
         "cppcoreguidelines-pro-type-member-init",
         "hicpp-member-init",
-        "readability-avoid-const-params-in-decls"
+        "readability-avoid-const-params-in-decls",
+        "cppcoreguidelines-pro-bounds-array-to-pointer-decay",
+        "hicpp-no-array-decay",
+        "readability-convert-member-functions-to-static",
+        "cppcoreguidelines-special-member-functions"
     ],
     "C_Cpp.files.exclude": {
         "C:\\Users\\dalo\\Desktop\\GitPriv\\AlbikarEngine\\AlbikarEditor\\thirtParts\\**": true, //TODO(dlorenz) to this relative

@@ -75,7 +75,7 @@ auto CApplication::FullScrean() -> void
 auto CApplication::SetAppInfo(CApplicationInfo& appInfo) -> void
 {
     m_AppInfo = std::make_unique<CApplicationInfo>(appInfo);
-    if (m_GlfwWindow) {
+    if (m_GlfwWindow != nullptr) {
         glfwSetWindowTitle(m_GlfwWindow, m_AppInfo->GetName().c_str());
     }
 }

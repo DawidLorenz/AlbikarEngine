@@ -1,8 +1,5 @@
-#define GLFW_INCLUDE_NONE
-#define GLFW_INCLUDE_VULKAN
 #include "AlbikarEngine.hpp"
-#include "Logger.hpp"
-#include <GLFW/glfw3.h>
+#include "Defines.hpp"
 
 namespace Albikar::engine {
 auto AlbikarEngine::InitEngine(const uint16_t resolutionWidth, const uint16_t resolutionHeight, const char* gameName, const bool fixedResolution) -> ALBIKAR_RETURN

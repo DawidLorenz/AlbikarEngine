@@ -6,15 +6,15 @@
 #include <GLFW/glfw3.h>
 
 namespace Albikar::render::vulkan {
-class CVulkanInstance final {
+class CInstance final {
 public:
-    CVulkanInstance(std::shared_ptr<Albikar::engine::CEngineProperties> engineProperties);
+    explicit CInstance(std::shared_ptr<Albikar::engine::CEngineProperties> engineProperties);
     auto Init() -> ALBIKAR_RETURN;
     auto Destroy() -> ALBIKAR_RETURN;
     [[nodiscard]] auto GetInstance() -> VkInstance const;
 
 private:
-    // -- Support Functions
+    // -- Support Functions -- //
     auto checkValidationLayerSupport() -> bool;
     auto checkInstanceExtensionSupport(std::vector<const char*>* checkExtensions) -> bool;
 

@@ -4,7 +4,7 @@
 namespace Albikar::render::vulkan {
 CBackEnd::CBackEnd(std::shared_ptr<Albikar::engine::CEngineProperties> engineProperties)
 {
-    m_Instance = std::make_shared<CVulkanInstance>(engineProperties);
+    m_Instance = std::make_shared<CInstance>(engineProperties);
 }
 
 CBackEnd::~CBackEnd()

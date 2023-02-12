@@ -1,7 +1,7 @@
 #pragma once
 #include "EngineProperties.hpp"
 #include "IBackEnd.hpp"
-#include "VulkanInstance.hpp"
+#include "Instance.hpp"
 
 namespace Albikar::render::vulkan {
 class CBackEnd final : public Albikar::render::IBackEnd {
@@ -15,6 +15,6 @@ public:
     auto EndFrame(const float deltaTime) -> ALBIKAR_RETURN final;
 
 private:
-    std::shared_ptr<CVulkanInstance> m_Instance;
+    std::shared_ptr<CInstance> m_Instance;
 };
 } // namespace Albikar::render::vulkan

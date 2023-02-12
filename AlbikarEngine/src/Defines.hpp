@@ -1,7 +1,18 @@
 #pragma once
 #include "AlbikarDefines.hpp"
+
+// INCLUSED
+// --VULKAN
+#define GLFW_INCLUDE_NONE
+#define GLFW_INCLUDE_VULKAN
+#include <GLFW/glfw3.h>
+
+// -- ALBIKAR ENGINE
 #include "Logger.hpp"
+// -- Core
+
 #include <stdexcept>
+#include <tuple>
 
 #define ALBIKAR_DEFAULT_CALSS(...)                             \
     __VA_ARGS__() = default;                                   \
@@ -21,4 +32,5 @@
         }                                        \
     } while (0);
 
+#define ALBIKAR_VK_MEMORY nullptr
 // ALBIKAR ENGINE
