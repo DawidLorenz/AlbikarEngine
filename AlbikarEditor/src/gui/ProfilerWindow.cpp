@@ -9,14 +9,14 @@ auto CProfilerWindow::Render() -> void
         static bool profiler = true;
         ImGui::Checkbox("Enable Profiler", &profiler);
 
-        static time_t start = time(0);
-        double seconds_since_start = difftime(time(0), start);
+        static time_t start = time(nullptr);
+        double seconds_since_start = difftime(time(nullptr), start);
         static const float stop1sec = 1.0F;
         static int frames = 0;
         static int frameLast = 1;
         frames++;
         if (seconds_since_start >= stop1sec) {
-            start = time(0);
+            start = time(nullptr);
             CInstrumentor::Get().GetAndClearLocalResult(m_vLocalResult);
             frameLast = frames;
             frames = 0;
@@ -40,27 +40,27 @@ auto CProfilerWindow::Render() -> void
                     ImGui::TableHeadersRow();
 
                     // Render Rows
-                    for (std::size_t i = 0; i < m_vLocalResult.size(); ++i) {
+                    for (auto& i : m_vLocalResult) {
                         ImGui::TableNextRow();
 
                         ImGui::TableSetColumnIndex(0);
-                        std::string action = m_vLocalResult[i].Name;
+                        std::string action = i.Name;
                         ImGui::TextUnformatted(action.c_str());
 
                         ImGui::TableSetColumnIndex(1);
-                        std::string totalDuration = std::to_string(static_cast<double>(m_vLocalResult[i].Duration));
+                        std::string totalDuration = std::to_string(static_cast<double>(i.Duration));
                         ImGui::TextUnformatted(totalDuration.c_str());
 
                         ImGui::TableSetColumnIndex(2);
-                        std::string frameDuration = std::to_string(static_cast<double>(m_vLocalResult[i].Duration / m_vLocalResult[i].calls));
+                        std::string frameDuration = std::to_string(static_cast<double>(i.Duration / i.calls));
                         ImGui::TextUnformatted(frameDuration.c_str());
 
                         ImGui::TableSetColumnIndex(3);
-                        std::string frameLoad = std::to_string(m_vLocalResult[i].calls / frameLast);
+                        std::string frameLoad = std::to_string(i.calls / frameLast);
                         ImGui::TextUnformatted(frameLoad.c_str());
 
                         ImGui::TableSetColumnIndex(4);
-                        std::string calls = std::to_string(m_vLocalResult[i].calls);
+                        std::string calls = std::to_string(i.calls);
                         ImGui::TextUnformatted(calls.c_str());
                     }
                     ImGui::EndTable();

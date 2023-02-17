@@ -1,8 +1,10 @@
 #include "ApplicationInfo.hpp"
+
 #include "ApplicationArgs.hpp"
+#include <utility>
 
 CApplicationInfo::CApplicationInfo(CApplicationArgs args)
-    : m_Args(args)
+    : m_Args(std::move(args))
 {
 }
 

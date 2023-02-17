@@ -1,6 +1,7 @@
 #pragma once
 #include "imgui.h"
 #include <string>
+#include <utility>
 #include <vector>
 
 class Style;
@@ -33,12 +34,12 @@ private:
 class Style {
 public:
     Style(std::string name, ImGuiStyle style)
-        : m_StyleName(name)
+        : m_StyleName(std::move(name))
         , m_Style(style)
     {
     }
 
-    std::string GetName()
+    auto GetName() -> std::string
     {
         return m_StyleName;
     }
@@ -49,7 +50,7 @@ public:
         *dst = m_Style;
     }
 
-    ImGuiStyle GetStyle()
+    auto GetStyle() -> ImGuiStyle
     {
         return m_Style;
     }

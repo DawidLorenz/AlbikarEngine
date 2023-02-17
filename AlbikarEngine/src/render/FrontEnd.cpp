@@ -1,13 +1,9 @@
 #include "FrontEnd.hpp"
 #include "vulkan/BackEnd.hpp"
 namespace Albikar::render {
-CFrontEnd::CFrontEnd(const char* gameName, const uint16_t newWidth, const uint16_t newHeight, std::shared_ptr<Albikar::engine::CEngineProperties> engineProperties)
+CFrontEnd::CFrontEnd(const char* gameName, const uint16_t newWidth, const uint16_t newHeight, const std::shared_ptr<Albikar::engine::CEngineProperties>& engineProperties)
 {
     m_BackEnd = std::make_unique<Albikar::render::vulkan::CBackEnd>(engineProperties);
-}
-
-CFrontEnd::~CFrontEnd()
-{
 }
 
 auto CFrontEnd::Init() -> ALBIKAR_RETURN

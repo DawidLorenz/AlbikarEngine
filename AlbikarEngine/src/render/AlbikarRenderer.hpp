@@ -13,7 +13,12 @@ public:
 public:
     CAlbikarRenderer();
     ~CAlbikarRenderer();
-    auto Init(GLFWwindow* window, const uint16_t resolutionWidth, const uint16_t resolutionHeight, const char* gameName, std::shared_ptr<Albikar::engine::CEngineProperties> engineProperties) -> ALBIKAR_RETURN;
+    CAlbikarRenderer(const CAlbikarRenderer&) = default;
+    CAlbikarRenderer(CAlbikarRenderer&&) = default;
+    auto operator=(const CAlbikarRenderer&) -> CAlbikarRenderer& = default;
+    auto operator=(CAlbikarRenderer&&) -> CAlbikarRenderer& = default;
+
+    auto Init(GLFWwindow* window, const uint16_t resolutionWidth, const uint16_t resolutionHeight, const char* gameName, const std::shared_ptr<Albikar::engine::CEngineProperties>& engineProperties) -> ALBIKAR_RETURN;
     auto OnResize(const uint16_t newWidth, const uint16_t newHeight) -> ALBIKAR_RETURN;
     auto OnDrawFrame() -> ALBIKAR_RETURN;
     auto CleanUp() -> ALBIKAR_RETURN;

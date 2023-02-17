@@ -6,4 +6,4 @@ void SearchWidget(const char* const widgetName, const char* const hintName, char
 {
     ImGui::InputTextWithHint(widgetName, hintName, buf, sizeof(buf) * 20);
 }
-}
+} // namespace AlbikarGui

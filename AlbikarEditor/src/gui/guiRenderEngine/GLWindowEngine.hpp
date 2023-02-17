@@ -4,7 +4,7 @@
 class CGLWindowEngine final : public IWindowEngine {
 public:
     CGLWindowEngine() = default;
-    ~CGLWindowEngine() = default;
+    ~CGLWindowEngine() final = default;
     explicit CGLWindowEngine(const CGLWindowEngine&) = delete;
     explicit CGLWindowEngine(CGLWindowEngine&&) = delete;
     auto operator=(const CGLWindowEngine&) -> CGLWindowEngine& = delete;

@@ -4,7 +4,7 @@
 
 static VkPhysicalDevice g_PhysicalDevice = VK_NULL_HANDLE;
 static VkDevice g_Device = VK_NULL_HANDLE;
-static uint32_t g_QueueFamily = (uint32_t)-1;
+static uint32_t g_QueueFamily = static_cast<uint32_t>(-1);
 static VkQueue g_Queue = VK_NULL_HANDLE;
 static VkDebugReportCallbackEXT g_DebugReport = VK_NULL_HANDLE;
 static VkPipelineCache g_PipelineCache = VK_NULL_HANDLE;
@@ -15,7 +15,7 @@ static bool g_SwapChainRebuild = false;
 
 CVKWindowEngine::CVKWindowEngine()
     : m_vkInstance(VK_NULL_HANDLE)
-    , m_vkAllocator(NULL)
+    , m_vkAllocator(nullptr)
     , m_imguiMainWindowData()
     , m_glfwWindow(nullptr)
 {
@@ -32,20 +32,20 @@ auto CVKWindowEngine::CreateWindow() -> GLFWwindow*
     LOG_INFO("CreateWindow");
     // Setup GLFW window
     glfwSetErrorCallback(glfwErrorCallback);
-    if (!glfwInit()) {
-        throw "glfwInit Error";
+    if (glfwInit() == 0) {
+        throw std::runtime_error("glfwInit Error");
     }
 
     // Create window
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    m_glfwWindow = glfwCreateWindow(1800, 1200, "VKWindowEngine", NULL, NULL);
+    m_glfwWindow = glfwCreateWindow(1800, 1200, "VKWindowEngine", nullptr, nullptr);
     if (m_glfwWindow == nullptr) {
         return m_glfwWindow;
     }
 
     // Setup Vulkan
-    if (!glfwVulkanSupported()) {
-        throw "GLFW: Vulkan Not Supported";
+    if (glfwVulkanSupported() == 0) {
+        throw std::runtime_error("GLFW: Vulkan Not Supported");
     }
 
     // Extensios
@@ -54,7 +54,7 @@ auto CVKWindowEngine::CreateWindow() -> GLFWwindow*
     SetupVulkan(extensions, extensions_count);
 
     // Create Window Surface
-    VkSurfaceKHR surface;
+    VkSurfaceKHR surface = nullptr;
     VkResult err = glfwCreateWindowSurface(m_vkInstance, m_glfwWindow, m_vkAllocator, &surface);
     vkCheckResult(err);
 
@@ -132,7 +132,7 @@ auto CVKWindowEngine::CreateWindow() -> GLFWwindow*
 
 auto CVKWindowEngine::IsWindowsClosed() -> bool
 {
-    return !glfwWindowShouldClose(m_glfwWindow);
+    return glfwWindowShouldClose(m_glfwWindow) == 0;
 }
 
 auto CVKWindowEngine::NewFrame() -> bool
@@ -163,8 +163,9 @@ auto CVKWindowEngine::NewFrame() -> bool
 auto CVKWindowEngine::Render(ImDrawData* imguiDrawData) -> bool
 {
     ImVec4 clear_color(0.45f, 0.55f, 0.60f, 1.00f);
-    if (imguiDrawData == nullptr)
+    if (imguiDrawData == nullptr) {
         return false;
+    }
     const bool is_minimized = (imguiDrawData->DisplaySize.x <= 0.0f || imguiDrawData->DisplaySize.y <= 0.0f);
     if (!is_minimized) {
         m_imguiMainWindowData.ClearValue.color.float32[0] = clear_color.x * clear_color.w;
@@ -205,7 +206,7 @@ auto CVKWindowEngine::Cleanup() -> bool
 
 auto CVKWindowEngine::SetupVulkan(const char** extensions, unsigned int extensions_count) -> void
 {
-    VkResult err;
+    VkResult err { VK_SUCCESS };
 
     // Create Vulkan Instance
     {
@@ -256,12 +257,12 @@ auto CVKWindowEngine::SetupVulkan(const char** extensions, unsigned int extensio
 
     // Select GPU
     {
-        uint32_t gpu_count;
-        err = vkEnumeratePhysicalDevices(m_vkInstance, &gpu_count, NULL);
+        uint32_t gpu_count = 0;
+        err = vkEnumeratePhysicalDevices(m_vkInstance, &gpu_count, nullptr);
         vkCheckResult(err);
         IM_ASSERT(gpu_count > 0);
 
-        VkPhysicalDevice* gpus = (VkPhysicalDevice*)malloc(sizeof(VkPhysicalDevice) * gpu_count);
+        auto* gpus = static_cast<VkPhysicalDevice*>(malloc(sizeof(VkPhysicalDevice) * gpu_count));
         err = vkEnumeratePhysicalDevices(m_vkInstance, &gpu_count, gpus);
         vkCheckResult(err);
 
@@ -270,7 +271,7 @@ auto CVKWindowEngine::SetupVulkan(const char** extensions, unsigned int extensio
         // dedicated GPUs) is out of scope of this sample.
         int use_gpu = 0;
         LOG_INFO("Number of GPUs: ", gpu_count);
-        for (int i = 0; i < (int)gpu_count; i++) {
+        for (int i = 0; i < static_cast<int>(gpu_count); i++) {
             VkPhysicalDeviceProperties properties;
             vkGetPhysicalDeviceProperties(gpus[i], &properties);
             if (properties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU) {
@@ -285,15 +286,16 @@ auto CVKWindowEngine::SetupVulkan(const char** extensions, unsigned int extensio
 
     // Select graphics queue family
     {
-        uint32_t count;
-        vkGetPhysicalDeviceQueueFamilyProperties(g_PhysicalDevice, &count, NULL);
-        VkQueueFamilyProperties* queues = (VkQueueFamilyProperties*)malloc(sizeof(VkQueueFamilyProperties) * count);
+        uint32_t count = 0;
+        vkGetPhysicalDeviceQueueFamilyProperties(g_PhysicalDevice, &count, nullptr);
+        auto* queues = static_cast<VkQueueFamilyProperties*>(malloc(sizeof(VkQueueFamilyProperties) * count));
         vkGetPhysicalDeviceQueueFamilyProperties(g_PhysicalDevice, &count, queues);
-        for (uint32_t i = 0; i < count; i++)
-            if (queues[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) {
+        for (uint32_t i = 0; i < count; i++) {
+            if ((queues[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) != 0u) {
                 g_QueueFamily = i;
                 break;
             }
+        }
         free(queues);
         IM_ASSERT(g_QueueFamily != (uint32_t)-1);
     }
@@ -338,7 +340,7 @@ auto CVKWindowEngine::SetupVulkan(const char** extensions, unsigned int extensio
         pool_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
         pool_info.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
         pool_info.maxSets = 1000 * IM_ARRAYSIZE(pool_sizes);
-        pool_info.poolSizeCount = (uint32_t)IM_ARRAYSIZE(pool_sizes);
+        pool_info.poolSizeCount = static_cast<uint32_t> IM_ARRAYSIZE(pool_sizes);
         pool_info.pPoolSizes = pool_sizes;
         err = vkCreateDescriptorPool(g_Device, &pool_info, m_vkAllocator, &g_DescriptorPool);
         vkCheckResult(err);
@@ -347,7 +349,7 @@ auto CVKWindowEngine::SetupVulkan(const char** extensions, unsigned int extensio
 
 auto CVKWindowEngine::FrameRender(ImDrawData* imguiDrawData) -> void
 {
-    VkResult err;
+    VkResult err { VK_SUCCESS };
 
     VkSemaphore image_acquired_semaphore = m_imguiMainWindowData.FrameSemaphores[m_imguiMainWindowData.SemaphoreIndex].ImageAcquiredSemaphore;
     VkSemaphore render_complete_semaphore = m_imguiMainWindowData.FrameSemaphores[m_imguiMainWindowData.SemaphoreIndex].RenderCompleteSemaphore;
@@ -412,8 +414,9 @@ auto CVKWindowEngine::FrameRender(ImDrawData* imguiDrawData) -> void
 }
 auto CVKWindowEngine::FramePresent() -> void
 {
-    if (g_SwapChainRebuild)
+    if (g_SwapChainRebuild) {
         return;
+    }
     VkSemaphore render_complete_semaphore = m_imguiMainWindowData.FrameSemaphores[m_imguiMainWindowData.SemaphoreIndex].RenderCompleteSemaphore;
     VkPresentInfoKHR info = {};
     info.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -436,17 +439,17 @@ auto CVKWindowEngine::vkSetupWindow(ImGui_ImplVulkanH_Window* wd, VkSurfaceKHR s
     wd->Surface = surface;
 
     // Check for WSI support
-    VkBool32 res;
+    VkBool32 res = 0;
     vkGetPhysicalDeviceSurfaceSupportKHR(g_PhysicalDevice, g_QueueFamily, wd->Surface, &res);
     if (res != VK_TRUE) {
         LOG_ERROR("Error no WSI support on physical device 0");
-        throw "Error no WSI support on physical device 0";
+        throw std::runtime_error("Error no WSI support on physical device 0");
     }
 
     // Select Surface Format
     const VkFormat requestSurfaceImageFormat[] = { VK_FORMAT_B8G8R8A8_UNORM, VK_FORMAT_R8G8B8A8_UNORM, VK_FORMAT_B8G8R8_UNORM, VK_FORMAT_R8G8B8_UNORM };
     const VkColorSpaceKHR requestSurfaceColorSpace = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
-    wd->SurfaceFormat = ImGui_ImplVulkanH_SelectSurfaceFormat(g_PhysicalDevice, wd->Surface, requestSurfaceImageFormat, (size_t)IM_ARRAYSIZE(requestSurfaceImageFormat), requestSurfaceColorSpace);
+    wd->SurfaceFormat = ImGui_ImplVulkanH_SelectSurfaceFormat(g_PhysicalDevice, wd->Surface, requestSurfaceImageFormat, static_cast<size_t> IM_ARRAYSIZE(requestSurfaceImageFormat), requestSurfaceColorSpace);
 
     // Select Present Mode
 #ifdef IMGUI_UNLIMITED_FRAME_RATE
@@ -464,11 +467,13 @@ auto CVKWindowEngine::vkSetupWindow(ImGui_ImplVulkanH_Window* wd, VkSurfaceKHR s
 
 auto CVKWindowEngine::vkCheckResult(VkResult err) -> void
 {
-    if (err == 0)
+    if (err == 0) {
         return;
+    }
     LOG_ERROR("VKWindowEngine Vulakn Error: VkResult = ", string_VkResult(err));
-    if (err < 0)
-        throw string_VkResult(err);
+    if (err < 0) {
+        throw std::runtime_error(string_VkResult(err));
+    }
 }
 
 auto CVKWindowEngine::glfwErrorCallback(int error, const char* description) -> void

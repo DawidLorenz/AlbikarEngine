@@ -5,7 +5,7 @@ class CTopBarWindowDebug final : public IWindowObject {
     WINDOW_OBJECT(CTopBarWindowDebug)
 public:
     CTopBarWindowDebug();
-    virtual ~CTopBarWindowDebug() = default;
+    ~CTopBarWindowDebug() override = default;
 
     auto Render() -> void final;
 

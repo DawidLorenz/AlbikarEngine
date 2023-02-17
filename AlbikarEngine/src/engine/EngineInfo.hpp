@@ -4,8 +4,6 @@
 namespace Albikar::engine {
 class CEngineInfo final {
 public:
-    CEngineInfo();
-    ~CEngineInfo();
     auto GetInfo() -> const char*;
 
 public:

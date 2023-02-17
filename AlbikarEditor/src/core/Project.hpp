@@ -5,7 +5,7 @@
 class CProject final {
 public:
     explicit CProject() = default;
-    explicit CProject(const std::string projectPath, const std::string projectName, const std::string projectDescription);
+    explicit CProject(std::string projectPath, std::string projectName, std::string projectDescription);
     ~CProject();
     CProject(const CProject&) = default;
     CProject(CProject&&) = default;

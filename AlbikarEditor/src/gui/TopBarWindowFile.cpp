@@ -38,7 +38,6 @@ const char* const NAME_PROJECT_CANCEL = "Cancel";
 CTopBarWindowFile::CTopBarWindowFile()
     : m_bShowNewProject(false)
     , m_bShowOpenProject(false)
-    , m_sProjectPath("")
 {
 }
 

@@ -8,8 +8,8 @@ namespace Albikar::engine {
 class CEngineProperties final : public AlbikarAPI::IEngineProperties {
 public:
     // INTERFACE
-    auto GetEngineInfo() -> const char*;
-    auto NotifyEngineInfoChanged(NotifyOnChange change) -> void;
+    auto GetEngineInfo() -> const char* final;
+    auto NotifyEngineInfoChanged(NotifyOnChange change) -> void final;
 
 public:
     // ENGINE USAGE
@@ -20,7 +20,13 @@ public:
 
 public:
     CEngineProperties();
-    ~CEngineProperties();
+    ~CEngineProperties() final = default;
+    CEngineProperties(const CEngineProperties&) = default;
+    CEngineProperties(CEngineProperties&&) = default;
+    auto operator=(const CEngineProperties&) -> CEngineProperties& = default;
+    auto operator=(CEngineProperties&&) -> CEngineProperties& = default;
+
+    // ENGINE USAGE
     auto EngineInfo() -> std::shared_ptr<CEngineInfo>;
 
 private:

@@ -11,8 +11,9 @@ auto CStyleManager::Get() -> CStyleManager&
 auto CStyleManager::GetStylesName() -> std::vector<std::string>
 {
     std::vector<std::string> styles;
-    for (auto i = 0u; i < constStyles.size(); i++) {
-        styles.emplace_back(constStyles[i].GetName());
+    styles.reserve(constStyles.size());
+    for (auto& constStyle : constStyles) {
+        styles.emplace_back(constStyle.GetName());
     }
     return styles;
 }
@@ -33,7 +34,7 @@ auto CStyleManager::ActiveCurrentStyle() -> void
     SetActiveStyle(m_sCurrentStyleName);
 }
 
-ImGuiStyle CStyleManager::GetCurrentStyle()
+auto CStyleManager::GetCurrentStyle() -> ImGuiStyle
 {
     auto i = std::find_if(constStyles.begin(),
         constStyles.end(),

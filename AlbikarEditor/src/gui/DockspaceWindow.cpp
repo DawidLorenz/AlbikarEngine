@@ -16,7 +16,7 @@ auto CDockspaceWindow::Render() -> void
     window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
     window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
-    if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode) {
+    if ((dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode) != 0) {
         window_flags |= ImGuiWindowFlags_NoBackground;
     }
 
@@ -26,7 +26,7 @@ auto CDockspaceWindow::Render() -> void
         ImGui::PopStyleVar(2);
 
         ImGuiIO& io = ImGui::GetIO();
-        if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
+        if ((io.ConfigFlags & ImGuiConfigFlags_DockingEnable) != 0) {
             ImGuiID dockspace_id = ImGui::GetID(WINDOW_DOCKSPACE);
             ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
         }

@@ -46,7 +46,7 @@ auto CInspectorWindow::Render() -> void
     ImGui::End();
 }
 
-auto CInspectorWindow::RenderGeneral() -> void
+auto CInspectorWindow::RenderGeneral() const -> void
 {
     if (ImGui::CollapsingHeader(NAME_INSP_GENERAL_TAB, ImGuiTreeNodeFlags_DefaultOpen)) {
         if (ImGui::BeginTable("##General", 2, flags)) {
@@ -92,7 +92,7 @@ auto CInspectorWindow::RenderGeneral() -> void
     }
 }
 
-auto CInspectorWindow::RenderTranslate() -> void
+auto CInspectorWindow::RenderTranslate() const -> void
 {
     if (ImGui::CollapsingHeader(NAME_INSP_TRANSLATE_TAB, ImGuiTreeNodeFlags_DefaultOpen)) {
         if (ImGui::BeginTable("##Translate", 2, flags)) {
@@ -219,7 +219,7 @@ auto CInspectorWindow::RenderTranslate() -> void
     }
 }
 
-auto CInspectorWindow::RenderPhysicalBox() -> void
+auto CInspectorWindow::RenderPhysicalBox() const -> void
 {
     if (ImGui::CollapsingHeader(NAME_INSP_PHY_TAB, ImGuiTreeNodeFlags_DefaultOpen)) {
         if (ImGui::BeginTable("##PhysicalBox", 2, flags)) {

@@ -14,7 +14,7 @@ CAlbikarRenderer::~CAlbikarRenderer()
     CleanUp();
 }
 
-auto CAlbikarRenderer::Init(GLFWwindow* window, const uint16_t resolutionWidth, const uint16_t resolutionHeight, const char* gameName, std::shared_ptr<Albikar::engine::CEngineProperties> engineProperties) -> ALBIKAR_RETURN
+auto CAlbikarRenderer::Init(GLFWwindow* window, const uint16_t resolutionWidth, const uint16_t resolutionHeight, const char* gameName, const std::shared_ptr<Albikar::engine::CEngineProperties>& engineProperties) -> ALBIKAR_RETURN
 {
     LOG_INFO("Init width: ", resolutionWidth, " height: ", resolutionHeight, " GameName: ", gameName);
     if (window == nullptr) {

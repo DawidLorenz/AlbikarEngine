@@ -13,7 +13,13 @@ public:
 
 public:
     CAlbikarDebug();
-    ~CAlbikarDebug();
+    ~CAlbikarDebug() final = default;
+    CAlbikarDebug(const CAlbikarDebug&) = default;
+    CAlbikarDebug(CAlbikarDebug&&) = default;
+    auto operator=(const CAlbikarDebug&) -> CAlbikarDebug& = default;
+    auto operator=(CAlbikarDebug&&) -> CAlbikarDebug& = default;
+
+    // ENGINE
     auto EngineProperties() -> std::shared_ptr<Albikar::engine::CEngineProperties>;
 
 private:

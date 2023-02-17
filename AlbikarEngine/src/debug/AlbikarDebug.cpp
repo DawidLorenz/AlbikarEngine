@@ -29,10 +29,6 @@ CAlbikarDebug::CAlbikarDebug()
     m_EngineProperties = std::make_shared<engine::CEngineProperties>();
 }
 
-CAlbikarDebug::~CAlbikarDebug()
-{
-}
-
 auto CAlbikarDebug::EngineProperties() -> std::shared_ptr<Albikar::engine::CEngineProperties>
 {
     return m_EngineProperties;

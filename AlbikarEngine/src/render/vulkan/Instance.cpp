@@ -7,7 +7,7 @@ std::vector<const char*> validationLayers = {
     "VK_LAYER_KHRONOS_validation"
 };
 
-CInstance::CInstance(std::shared_ptr<Albikar::engine::CEngineProperties> engineProperties)
+CInstance::CInstance(const std::shared_ptr<Albikar::engine::CEngineProperties>& engineProperties)
     : m_EngineProperties(engineProperties)
     , m_EnableValidationLayers(true) // TODO(dlorenz) use it only in Debug
 {
@@ -78,7 +78,7 @@ auto CInstance::Destroy() -> ALBIKAR_RETURN
     return ALBIKAR_SUCCESS;
 }
 
-auto CInstance::GetInstance() -> VkInstance const
+auto CInstance::GetInstance() -> VkInstance
 {
     return m_Instance;
 }

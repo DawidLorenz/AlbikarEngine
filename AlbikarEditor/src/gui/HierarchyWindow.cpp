@@ -45,8 +45,9 @@ auto CHierarchyWindow::RenderHierarchy() -> void
                         ImGui::TableNextColumn();
                         ImGui::TextUnformatted(node->Type);
                         if (open) {
-                            for (int child_n = 0; child_n < node->ChildCount; child_n++)
+                            for (int child_n = 0; child_n < node->ChildCount; child_n++) {
                                 DisplayNode(&all_nodes[node->ChildIdx + child_n], all_nodes);
+                            }
                             ImGui::TreePop();
                         }
                     } else {

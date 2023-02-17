@@ -13,8 +13,8 @@ private:
     ImU32 m_iColorForTable;
 
 private:
-    auto RenderGeneral() -> void;
-    auto RenderTranslate() -> void;
-    auto RenderPhysicalBox() -> void;
+    auto RenderGeneral() const -> void;
+    auto RenderTranslate() const -> void;
+    auto RenderPhysicalBox() const -> void;
     auto RenderShading() -> void;
 };

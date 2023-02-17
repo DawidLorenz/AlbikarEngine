@@ -37,10 +37,6 @@ CEngineProperties::CEngineProperties()
 {
 }
 
-CEngineProperties::~CEngineProperties()
-{
-}
-
 auto CEngineProperties::EngineInfo() -> std::shared_ptr<CEngineInfo>
 {
     return m_EngineInfo;

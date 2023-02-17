@@ -26,22 +26,22 @@ auto CTopBarWindowDebug::Render() -> void
 
     if (ImGui::BeginMenu(NAME_TOPBAR_DEBUG)) {
 
-        if (ImGui::MenuItem(NAME_TOPBAR_STYLE_EDITOR, NULL, m_bShowStyleEditor)) {
+        if (ImGui::MenuItem(NAME_TOPBAR_STYLE_EDITOR, nullptr, m_bShowStyleEditor)) {
             m_bShowStyleEditor = true;
         }
-        if (ImGui::MenuItem(NAME_TOPBAR_DEMO_WINDOW, NULL, m_bShowDemoWindow)) {
+        if (ImGui::MenuItem(NAME_TOPBAR_DEMO_WINDOW, nullptr, m_bShowDemoWindow)) {
             m_bShowDemoWindow = true;
         }
 
         ImGui::Separator();
 
-        if (ImGui::MenuItem(NAME_TOPBAR_DEBUG_LOG, NULL, m_bShowIMGUIDebugLog)) {
+        if (ImGui::MenuItem(NAME_TOPBAR_DEBUG_LOG, nullptr, m_bShowIMGUIDebugLog)) {
             m_bShowIMGUIDebugLog = true;
         }
-        if (ImGui::MenuItem(NAME_TOPBAR_STACK_WINDOW, NULL, m_bShowStackToolWindow)) {
+        if (ImGui::MenuItem(NAME_TOPBAR_STACK_WINDOW, nullptr, m_bShowStackToolWindow)) {
             m_bShowStackToolWindow = true;
         }
-        if (ImGui::MenuItem(NAME_TOPBAR_SHOW_WINDOW_REC, NULL, &cfg->ShowWindowsRects)) {
+        if (ImGui::MenuItem(NAME_TOPBAR_SHOW_WINDOW_REC, nullptr, &cfg->ShowWindowsRects)) {
             cfg->ShowWindowsRectsType = 4;
         }
 
@@ -93,14 +93,15 @@ auto CTopBarWindowDebug::RenderDebugWindowRect() -> void
     if (cfg->ShowWindowsRects) {
         for (int n = 0; n < g.Windows.Size; n++) {
             ImGuiWindow* window = g.Windows[n];
-            if (!window->WasActive)
+            if (!window->WasActive) {
                 continue;
+            }
             ImDrawList* draw_list = ImGui::GetForegroundDrawList(window);
             if (cfg->ShowWindowsRects) {
                 ImRect r = window->WorkRect;
                 draw_list->AddRect(r.Min, r.Max, IM_COL32(255, 0, 128, 255));
             }
-            if (cfg->ShowWindowsBeginOrder && !(window->Flags & ImGuiWindowFlags_ChildWindow)) {
+            if (cfg->ShowWindowsBeginOrder && ((window->Flags & ImGuiWindowFlags_ChildWindow) == 0)) {
                 char buf[32];
                 ImFormatString(buf, IM_ARRAYSIZE(buf), "%d", window->BeginOrderWithinContext);
                 float font_size = ImGui::GetFontSize();

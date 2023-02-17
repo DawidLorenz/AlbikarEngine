@@ -60,8 +60,9 @@ auto CLogWindow::Render() -> void
         }
 
         // Options, Filter
-        if (ImGui::Button("Options"))
+        if (ImGui::Button("Options")) {
             ImGui::OpenPopup("Options");
+        }
 
         ImGui::SameLine();
         ImGui::PushStyleColor(ImGuiCol_Button, COLOR_ORANGE_DARK);
@@ -108,8 +109,9 @@ auto CLogWindow::Render() -> void
                 PrintLog(element);
             }
 
-            if ((autoScroleActive != m_bAutoScroll && m_bAutoScroll) || ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+            if ((autoScroleActive != m_bAutoScroll && m_bAutoScroll) || ImGui::GetScrollY() >= ImGui::GetScrollMaxY()) {
                 ImGui::SetScrollHereY(1.0F);
+            }
 
             autoScroleActive = m_bAutoScroll;
         }
@@ -124,7 +126,7 @@ auto CLogWindow::PrintLog(const CLogInfo& log) -> void
 {
     std::string toDisplay;
 
-    if ((log.m_bLogFromAlbikar == true && m_iComboCurrentItem == 1) || (log.m_bLogFromAlbikar == false && m_iComboCurrentItem == 2)) {
+    if ((log.m_bLogFromAlbikar && m_iComboCurrentItem == 1) || (!log.m_bLogFromAlbikar && m_iComboCurrentItem == 2)) {
         return;
     }
 
@@ -132,32 +134,37 @@ auto CLogWindow::PrintLog(const CLogInfo& log) -> void
 
     switch (log.m_eMode) {
     case CLogInfo::LOG_MODE::CRITICAL:
-        if (m_bCheckCritical != true)
+        if (!m_bCheckCritical) {
             return;
+        }
         ImGui::PushStyleColor(ImGuiCol_Text, COLOR_RED);
         toDisplay += "[CRIT] ";
         break;
     case CLogInfo::LOG_MODE::WARN:
-        if (m_bCheckWarn != true)
+        if (!m_bCheckWarn) {
             return;
+        }
         ImGui::PushStyleColor(ImGuiCol_Text, COLOR_YELLOW);
         toDisplay += "[WARN] ";
         break;
     case CLogInfo::LOG_MODE::INFO:
-        if (m_bCheckInfo != true)
+        if (!m_bCheckInfo) {
             return;
+        }
         ImGui::PushStyleColor(ImGuiCol_Text, COLOR_WHITE);
         toDisplay += "[INFO] ";
         break;
     case CLogInfo::LOG_MODE::ERROR:
-        if (m_bCheckError != true)
+        if (!m_bCheckError) {
             return;
+        }
         ImGui::PushStyleColor(ImGuiCol_Text, COLOR_RED);
         toDisplay += "[ERROR] ";
         break;
     case CLogInfo::LOG_MODE::LINE:
-        if (m_bCheckLine != true)
+        if (!m_bCheckLine) {
             return;
+        }
         ImGui::PushStyleColor(ImGuiCol_Text, COLOR_WHITE);
         toDisplay += "[LINE] ";
         break;
@@ -165,10 +172,12 @@ auto CLogWindow::PrintLog(const CLogInfo& log) -> void
         return;
     }
 
-    if (m_bShowFile)
+    if (m_bShowFile) {
         toDisplay += log.m_sFileName + ":" + std::to_string(log.m_uiFileLine) + " ";
-    if (m_bShowFunction)
+    }
+    if (m_bShowFunction) {
         toDisplay += log.m_sFunctionName + " ";
+    }
     toDisplay += log.m_sLogOutput;
 
     if (m_sFilter.IsActive()) {
@@ -185,7 +194,7 @@ auto CLogWindow::PrintLog(const CLogInfo& log) -> void
 
 auto CLogWindow::SaveToFile() -> void
 {
-    std::time_t t = std::time(0);
+    std::time_t t = std::time(nullptr);
     std::tm* now = std::localtime(&t);
     std::string logName = "Log-" + std::to_string(now->tm_year + 1900) + "-" + std::to_string(now->tm_mon + 1) + "-" + std::to_string(now->tm_mday) + "-" + std::to_string(now->tm_hour) + "-" + std::to_string(now->tm_min) + "-" + std::to_string(now->tm_sec) + ".txt";
     LOG_INFO("Save to file ", logName);

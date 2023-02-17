@@ -1,7 +1,7 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 
-constexpr ImVec2 CENTER_VEC = ImVec2(0.5f, 0.5f);
+constexpr ImVec2 CENTER_VEC = ImVec2(0.5f, 0.5F);
 
 const char* const APP_NAME = "Albikar";
 

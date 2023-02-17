@@ -2,13 +2,9 @@
 #include "Logger.hpp"
 
 namespace Albikar::render::vulkan {
-CBackEnd::CBackEnd(std::shared_ptr<Albikar::engine::CEngineProperties> engineProperties)
+CBackEnd::CBackEnd(const std::shared_ptr<Albikar::engine::CEngineProperties>& engineProperties)
 {
     m_Instance = std::make_shared<CInstance>(engineProperties);
-}
-
-CBackEnd::~CBackEnd()
-{
 }
 
 auto CBackEnd::Init() -> ALBIKAR_RETURN

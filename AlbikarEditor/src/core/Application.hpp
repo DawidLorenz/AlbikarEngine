@@ -20,7 +20,7 @@ public:
 
     auto AutoSave() -> bool&;
 
-    auto CreateProject(const std::string projectPath, const std::string projectName, const std::string projectDescription) -> bool;
+    auto CreateProject(const std::string& projectPath, const std::string& projectName, const std::string& projectDescription) -> bool;
 
 private:
     auto SetAppInfo(CApplicationInfo& appInfo) -> void;
@@ -32,8 +32,8 @@ private:
     ~CApplication() = default;
 
 public:
-    explicit CApplication(const CApplication&) = delete;
-    explicit CApplication(CApplication&&) = delete;
+    CApplication(const CApplication&) = delete;
+    CApplication(CApplication&&) = delete;
     auto operator=(const CApplication&) -> CApplication& = delete;
     auto operator=(const CApplication&&) -> CApplication& = delete;
 

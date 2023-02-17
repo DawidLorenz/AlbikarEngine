@@ -8,10 +8,10 @@
 namespace Albikar::render::vulkan {
 class CInstance final {
 public:
-    explicit CInstance(std::shared_ptr<Albikar::engine::CEngineProperties> engineProperties);
+    explicit CInstance(const std::shared_ptr<Albikar::engine::CEngineProperties>& engineProperties);
     auto Init() -> ALBIKAR_RETURN;
     auto Destroy() -> ALBIKAR_RETURN;
-    [[nodiscard]] auto GetInstance() -> VkInstance const;
+    [[nodiscard]] auto GetInstance() -> VkInstance;
 
 private:
     // -- Support Functions -- //

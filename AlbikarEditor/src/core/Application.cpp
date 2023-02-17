@@ -53,7 +53,7 @@ auto CApplication::AutoSave() -> bool&
     return m_AutoSave;
 }
 
-auto CApplication::CreateProject(const std::string projectPath, const std::string projectName, const std::string projectDescription) -> bool
+auto CApplication::CreateProject(const std::string& projectPath, const std::string& projectName, const std::string& projectDescription) -> bool
 {
     if (m_Project != nullptr) {
         m_Project->CloseProject();
@@ -84,13 +84,13 @@ auto CApplication::CreateGuiRenderEngine() -> void
 {
     m_WindowEngine = std::make_unique<CVKWindowEngine>();
     if (m_WindowEngine == nullptr) {
-        throw "Cannot create WindowEngine";
+        throw std::runtime_error("Cannot create WindowEngine");
     }
 
     // Create Window
     m_GlfwWindow = m_WindowEngine->CreateWindow();
     if (m_GlfwWindow == nullptr) {
-        throw "Cannot create GLFW Window";
+        throw std::runtime_error("Cannot create GLFW Window");
     }
 }
 
